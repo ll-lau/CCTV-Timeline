@@ -29,8 +29,17 @@
   // Hex literals for fills set as SVG attributes (var() does not resolve in presentation attributes).
   const BAND = { ych: '#eef4ff', cpmm: '#fff3ea', fund: '#f1f5f9' };
 
+  // Milestone ring stroke hex (attributes) + the key milestones to highlight, keyed by lane + primary date.
+  const CAT_HEX = { YCH: '#2563eb', MEET: '#14b8a6', CPMM: '#ea580c', FUND: '#64748b' };
+  const KEY = {
+    'Funding Approval':  new Set(['2022-12-21', '2023-12-13', '2024-03-28', '2024-04-15', '2024-04-16', '2024-08-13', '2025-08-12']),
+    'Former Tendering':  new Set(['2022-07-21', '2023-03-01', '2023-04-11', '2023-08-07', '2025-04-29']),
+    'Current Tendering': new Set(['2025-03-01', '2025-07-31', '2026-04-17']),
+  };
+  const isKey = (name, pIso) => !!KEY[name] && KEY[name].has(pIso);
+
   const GEO = {
-    marginLeft: 150, marginRight: 26, marginTop: 30,
+    marginLeft: 150, marginRight: 26, marginTop: 40,
     fundStripH: 24, fundGap: 12,
     tenderRowH: 96, rowGap: 18,
     ychOffset: 28,        // center of YCH sub-band within a tender row
@@ -43,12 +52,15 @@
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const ms = (iso) => { const [y, m, d] = iso.split('-').map(Number); return Date.UTC(y, m - 1, d); };
   const fmtDate = (iso) => { const [y, m, d] = iso.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
+  const shortDate = (iso) => { const [, m, d] = iso.split('-').map(Number); return `${d} ${MONTHS[m - 1]}`; };
   const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
   const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
   const sideOf = (cat) => (cat === 'CPMM' ? 'CPMM' : (cat === 'FUND' ? null : 'YCH'));
-  const isComment = (e) => e.cat === 'CPMM' && /comment/i.test(e.text);
+  const isComment = (e) => e.cat === 'CPMM' && (
+    /comment/i.test(e.text) || (/clarification/i.test(e.text) && /request|requir/i.test(e.text))
+  );
 
   const summary = (arr) => {
     if (!arr.length) return { n: 0, avg: 0, med: 0, max: 0, total: 0 };
@@ -93,15 +105,16 @@
 
   /* ---------- Process data (width-independent; compute once) ---------- */
   function processData() {
-    const evList = (lane) => lane.events.map((e) => ({
+    const evList = (lane, name) => lane.events.map((e) => ({
       cat: e.cat, text: e.text, allDates: e.dates, displayDate: e.date,
-      ms: ms(e.primary), side: sideOf(e.cat),
+      ms: ms(e.primary), side: sideOf(e.cat), pIso: e.primary, keyMs: isKey(name, e.primary),
     })).sort((a, b) => a.ms - b.ms);
 
-    const former  = evList(byName('Former Tendering'));
-    const current = evList(byName('Current Tendering'));
+    const former  = evList(byName('Former Tendering'), 'Former Tendering');
+    const current = evList(byName('Current Tendering'), 'Current Tendering');
     const funding = byName('Funding Approval').events.map((e) => ({
-      text: e.text, allDates: e.dates, displayDate: e.date, ms: ms(e.primary),
+      cat: 'FUND', text: e.text, allDates: e.dates, displayDate: e.date,
+      ms: ms(e.primary), side: null, pIso: e.primary, keyMs: isKey('Funding Approval', e.primary),
     })).sort((a, b) => a.ms - b.ms);
 
     // Number every CPMM comment round chronologically across both tendering phases.
@@ -166,9 +179,9 @@
     const P = PROC;
     const yrs = P.spanYears.toFixed(1);
     const cards = [
-      { k: 'cpmm', num: `${P.commentRounds}`, lbl: `CPMM comment rounds — feedback in ${P.commentRounds} separate rounds, each forcing a YCH revision` },
-      { k: 'ych',  num: `${P.ychAct}<small> vs ${P.cpmmAct}</small>`, lbl: `YCH vs CPMM recorded actions across tendering — YCH carried the operational load` },
-      { k: 'meet', num: `~${P.ychT.med}<small> d</small>`, lbl: `YCH median turnaround on CPMM comments — prompt throughout` },
+      { k: 'cpmm', num: `${P.commentRounds}`, lbl: `CPMM comment rounds — feedback in ${P.commentRounds} separate rounds, each requiring a YCH revision` },
+      { k: 'ych',  num: `${P.ychAct}<small> vs ${P.cpmmAct}</small>`, lbl: `YCH vs CPMM recorded actions across tendering` },
+      { k: 'meet', num: `~${P.ychT.med}<small> d</small>`, lbl: `YCH median turnaround on CPMM comments` },
       { k: 'fund', num: `${P.fundMax}<small> d</small>`, lbl: `Longest single stall — HHB funding approval (Aug 2024 → Aug 2025)` },
       { k: 'neutral', num: `${yrs}<small> yrs</small>`, lbl: `Project elapsed, May 2022 → Jun 2026` },
     ];
@@ -190,7 +203,9 @@
       Per-response speed is comparable — the drag is the <i>number</i> of rounds (${P.commentRounds}), not slow replies.</p>
       <p><b>Stall ribbon.</b> Any handoff gap ≥ ${STALL_DAYS} days is drawn as a ribbon tinted by the responding side;
       funding gaps ≥ ${FUND_STALL_DAYS} days are ribboned on the funding track. Every ribbon is hoverable for its details.</p>
-      <p><b>Comment-round count.</b> CPMM events whose text matches <code>/comment/i</code> are numbered chronologically.</p>`;
+      <p><b>Comment-round count.</b> CPMM feedback events are numbered chronologically — text matching
+      <code>/comment/i</code>, or a clarification <i>requested/required</i> by CPMM. EOI issue/close are
+      treated as CPMM actions (per the agreed categorisation).</p>`;
   }
 
   /* ---------- Legend ---------- */
@@ -215,6 +230,13 @@
       });
       legendEl.appendChild(item);
     });
+    // Static (non-filter) legend entry for key milestones.
+    const note = document.createElement('span');
+    note.className = 'legend-note';
+    note.innerHTML = '<span class="ring-swatch"></span>'
+      + '<span class="legend-text"><span class="legend-label">Key milestone</span>'
+      + '<span class="legend-desc">ringed marker + date</span></span>';
+    legendEl.appendChild(note);
   }
 
   function applyFocus() {
@@ -404,7 +426,7 @@
     evs.forEach((e) => drawNode(svg, e, e.cat));
     // CPMM comment badges (drawn last, on top)
     evs.filter((e) => e.commentNo).forEach((e) => {
-      const bg = el('g', { class: 'badge', transform: `translate(${e.x + 8}, ${e.y - 8})` }, svg);
+      const bg = el('g', { class: 'badge', transform: `translate(${e.x + 8}, ${e.y + 8})` }, svg);
       el('circle', { r: 7 }, bg);
       const t = el('text', { x: 0, y: 1 }, bg);
       t.textContent = e.commentNo;
@@ -412,12 +434,23 @@
   }
 
   function drawNode(svg, e, cat) {
-    const g = el('g', { class: 'dot', transform: `translate(${e.x}, ${e.y})`, 'data-cat': cat, tabindex: '0' }, svg);
+    const g = el('g', { class: 'dot' + (e.keyMs ? ' key' : ''), transform: `translate(${e.x}, ${e.y})`, 'data-cat': cat, tabindex: '0' }, svg);
     g._d = e;
     const title = el('title', {}, g);
     title.textContent = `${fmtDate(e.allDates[0])} — ${e.text}`;
-    el('circle', { r: GEO.dotR, class: `dot-vis cat-${cat}` }, g);
+    if (e.keyMs) {
+      el('circle', { r: GEO.dotR + 4.5, fill: 'none', stroke: CAT_HEX[cat], 'stroke-width': 2, opacity: 0.9, class: 'key-ring' }, g);
+      el('circle', { r: GEO.dotR + 1.5, class: `dot-vis cat-${cat}` }, g);
+    } else {
+      el('circle', { r: GEO.dotR, class: `dot-vis cat-${cat}` }, g);
+    }
     el('circle', { r: GEO.hitR, class: 'dot-hit' }, g);
+    if (e.keyMs) {
+      const upper = e.side !== 'CPMM';   // YCH/FUND → label above; CPMM → below (clear of the zig-zag)
+      const ly = upper ? -(GEO.dotR + 12) : (GEO.dotR + 13);
+      const t = el('text', { x: 0, y: ly, class: 'key-label', 'text-anchor': 'middle' }, g);
+      t.textContent = shortDate(e.pIso);
+    }
   }
 
   /* ---------- Interaction ---------- */
