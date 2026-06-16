@@ -1,0 +1,924 @@
+{
+ "lanes": [
+  {
+   "name": "Funding Approval",
+   "events": [
+    {
+     "dates": [
+      "2022-12-21"
+     ],
+     "primary": "2022-12-21",
+     "date": "21/12/2022",
+     "text": "Postponement of the project from FY22/23 to FY23/24 endorsed by HCE",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2023-12-13"
+     ],
+     "primary": "2023-12-13",
+     "date": "13/12/2023",
+     "text": "YCH FMD submitted CPD1 form to KWCFM",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2023-12-19"
+     ],
+     "primary": "2023-12-19",
+     "date": "19/12/2023",
+     "text": "KWCFM submitted CPD1 form to HO D&W",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-01-22"
+     ],
+     "primary": "2024-01-22",
+     "date": "22/1/2024",
+     "text": "HO D&W CPD Level 3 vetted",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-03-28"
+     ],
+     "primary": "2024-03-28",
+     "date": "28/3/2024",
+     "text": "CPD1 from was not submitted to HHB. Project status reverted to planning, project year updated from 23/24 to 24/25.",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-04-15"
+     ],
+     "primary": "2024-04-15",
+     "date": "15/4/2024",
+     "text": "YCH FMD submitted CPD1 form to KWCFM",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-04-16"
+     ],
+     "primary": "2024-04-16",
+     "date": "16/4/2024",
+     "text": "CPD1 form Rejected by KWCFM (Reason: Please evaluate the cost effectiveness of TMS' fee for the part of proprietary system.)",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-06-18"
+     ],
+     "primary": "2024-06-18",
+     "date": "18/6/2024",
+     "text": "YCH FMD re-submitted CPD1 form to KWCFM",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-06-18"
+     ],
+     "primary": "2024-06-18",
+     "date": "18/6/2024",
+     "text": "KWCFM submitted CPD1 form to HO D&W",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-07-19"
+     ],
+     "primary": "2024-07-19",
+     "date": "19/7/2024",
+     "text": "HO D&W D&W Level 3 vetted",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-07-23"
+     ],
+     "primary": "2024-07-23",
+     "date": "23/7/2024",
+     "text": "HCE confirmed the CPD1 form and submitted to D&W",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-07-30"
+     ],
+     "primary": "2024-07-30",
+     "date": "30/7/2024",
+     "text": "CPD1 form was grouped into batch no. 2024/2025-007",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2024-08-13"
+     ],
+     "primary": "2024-08-13",
+     "date": "13/8/2024",
+     "text": "HO D&W submitted CPD1 form to HHB",
+     "cat": "FUND"
+    },
+    {
+     "dates": [
+      "2025-08-12"
+     ],
+     "primary": "2025-08-12",
+     "date": "12/8/2025",
+     "text": "HHB approved funding.",
+     "cat": "FUND"
+    }
+   ]
+  },
+  {
+   "name": "Former Tendering",
+   "events": [
+    {
+     "dates": [
+      "2022-05-01"
+     ],
+     "primary": "2022-05-01",
+     "date": "May 2022",
+     "text": "First specifications and reference quotation provided by former TMS",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-06-23"
+     ],
+     "primary": "2022-06-23",
+     "date": "23/6/2022",
+     "text": "Revised specifications provided by TMS",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-06-24"
+     ],
+     "primary": "2022-06-24",
+     "date": "24/6/2022",
+     "text": "YCH Security Dept. provided proposed TAP members to YCH Supplies",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-07-14"
+     ],
+     "primary": "2022-07-14",
+     "date": "14/7/2022",
+     "text": "YCH FMD provided draft specifications to YCH Supplies.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-07-20"
+     ],
+     "primary": "2022-07-20",
+     "date": "20/7/2022",
+     "text": "YCH FMD provided completed checklist to YCH Supplies.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-07-21"
+     ],
+     "primary": "2022-07-21",
+     "date": "21/7/2022",
+     "text": "YCH Supplies advised on tendering arrangement and commented on the checklist. YCH Supplies also advised that they are seeking CPMM’s comment in parallel.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-07-26"
+     ],
+     "primary": "2022-07-26",
+     "date": "26/7/2022",
+     "text": "YCH Supplies convey CPMM’s 1st comments on the draft specifications and the suggested amendments to YCH FMD.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2022-08-09"
+     ],
+     "primary": "2022-08-09",
+     "date": "9/8/2022",
+     "text": "YCH FMD provided revised specifications and appendices to YCH Supplies. Minor suggested amendments from YCH Supplies were received on the same day.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-08-12"
+     ],
+     "primary": "2022-08-12",
+     "date": "12/8/2022",
+     "text": "YCH Supplies convey comments from ITD to YCH FMD.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-08-15"
+     ],
+     "primary": "2022-08-15",
+     "date": "15/8/2022",
+     "text": "In response to ITD’s comment, YCH FMD provided revised specifications to YCH Supplies.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-08-18"
+     ],
+     "primary": "2022-08-18",
+     "date": "18/8/2022",
+     "text": "YCH FMD provided proposed timeline and draft specifications to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-09-20"
+     ],
+     "primary": "2022-09-20",
+     "date": "20/9/2022",
+     "text": "CPMM provided 2nd comment on the draft specifications",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2022-10-14"
+     ],
+     "primary": "2022-10-14",
+     "date": "14/10/2022",
+     "text": "YCH FMD provided revised draft specifications to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-10-17"
+     ],
+     "primary": "2022-10-17",
+     "date": "17/10/2022",
+     "text": "YCH FMD provided updated timeline to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-11-01"
+     ],
+     "primary": "2022-11-01",
+     "date": "1/11/2022",
+     "text": "CPMM provided 3rd comments on the draft specifications",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2022-11-09"
+     ],
+     "primary": "2022-11-09",
+     "date": "9/11/2022",
+     "text": "YCH FMD provided R-to-C to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-11-16"
+     ],
+     "primary": "2022-11-16",
+     "date": "16/11/2022",
+     "text": "CPMM provided 4th comments on the draft specifications",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2022-11-25"
+     ],
+     "primary": "2022-11-25",
+     "date": "25/11/2022",
+     "text": "YCH FMD provided R-to-C to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-11-28"
+     ],
+     "primary": "2022-11-28",
+     "date": "28/11/2022",
+     "text": "YCH FMD provided updated appendices of specification to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2022-11-30"
+     ],
+     "primary": "2022-11-30",
+     "date": "30/11/2022",
+     "text": "CPMM provided 5th comments on the draft specifications",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-01-14"
+     ],
+     "primary": "2023-01-14",
+     "date": "14/1/2023",
+     "text": "YCH FMD provided R-to-C to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-02-14"
+     ],
+     "primary": "2023-02-14",
+     "date": "14/2/2023",
+     "text": "CPMM provided 6th comments on the draft specifications",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-02-17"
+     ],
+     "primary": "2023-02-17",
+     "date": "17/2/2023",
+     "text": "YCH FMD provided R-to-C to CPMM",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-02-20"
+     ],
+     "primary": "2023-02-20",
+     "date": "20/2/2023",
+     "text": "TAP formed",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-03-01"
+     ],
+     "primary": "2023-03-01",
+     "date": "1/3/2023",
+     "text": "EOI Issued",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-04-11"
+     ],
+     "primary": "2023-04-11",
+     "date": "11/4/2023",
+     "text": "EOI closed. 4 Suppliers expressed interest.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-05-12"
+     ],
+     "primary": "2023-05-12",
+     "date": "12/5/2023",
+     "text": "YCH Supplies requested CPMM to liaise with potential suppliers to provide cost breakdown due to large indicative price difference.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-07-06"
+     ],
+     "primary": "2023-07-06",
+     "date": "6/7/2023",
+     "text": "CPMM provided cost breakdown of indicative price proposal and supplementary information to YCH Supplies.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-08-07",
+      "2023-08-10"
+     ],
+     "primary": "2023-08-07",
+     "date": "7/8/2023 & 10/8/2023",
+     "text": "Arranged Pre-tender Briefing in the form of TAP meeting",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-08-24"
+     ],
+     "primary": "2023-08-24",
+     "date": "24/8/2023",
+     "text": "CPMM stated that they would request potential suppliers to provide supplementary information, including no. of camera for each location, unit price of AI camera and non-AI camera, etc.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-09-13"
+     ],
+     "primary": "2023-09-13",
+     "date": "13/9/2023",
+     "text": "CPMM requested YCH to provide clarifications.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-10-05"
+     ],
+     "primary": "2023-10-05",
+     "date": "5/10/2023",
+     "text": "YCH Supplies replied CPMM.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-11-03",
+      "2023-11-10",
+      "2023-11-15",
+      "2023-11-17"
+     ],
+     "primary": "2023-11-03",
+     "date": "3/11/2023 / 10/11/2023 / 15/11/2023 / 17/11/2023",
+     "text": "YCH Security chased CPMM for update.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-11-17"
+     ],
+     "primary": "2023-11-17",
+     "date": "17/11/2023",
+     "text": "CPMM sent out draft marking scheme and commented on specifications.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-12-06"
+     ],
+     "primary": "2023-12-06",
+     "date": "6/12/2023",
+     "text": "YCH Supplies provided suggested amendment on marking scheme to CPMM.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-12-11"
+     ],
+     "primary": "2023-12-11",
+     "date": "11/12/2023",
+     "text": "CPMM further commented on the marking scheme.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-12-12"
+     ],
+     "primary": "2023-12-12",
+     "date": "12/12/2023",
+     "text": "YCH Security replied CPMM’s comments on marking scheme.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-12-14"
+     ],
+     "primary": "2023-12-14",
+     "date": "14/12/2023",
+     "text": "CPMM further commented on the marking scheme.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2023-12-15"
+     ],
+     "primary": "2023-12-15",
+     "date": "15/12/2023",
+     "text": "YCH Security replied CPMM’s comments on marking scheme. CPMM had no further comment.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2023-12-18"
+     ],
+     "primary": "2023-12-18",
+     "date": "18/12/2023",
+     "text": "YCH Supplies submitted revised specifications and appendices in response to CPMM’s comments.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2024-01-05"
+     ],
+     "primary": "2024-01-05",
+     "date": "5/1/2024",
+     "text": "CPMM further commented on the specifications.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-01-08"
+     ],
+     "primary": "2024-01-08",
+     "date": "8/1/2024",
+     "text": "YCH Security replied CPMM’s comments.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2024-01-11"
+     ],
+     "primary": "2024-01-11",
+     "date": "11/1/2024",
+     "text": "CPMM further commented on the specifications.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-01-12"
+     ],
+     "primary": "2024-01-12",
+     "date": "12/1/2024",
+     "text": "YCH FMD replied CPMM’s comments.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2024-01-19"
+     ],
+     "primary": "2024-01-19",
+     "date": "19/1/2024",
+     "text": "CPMM further commented on the specifications. CPMM stated that the revised specifications and other clarifications will be sent to potential suppliers for their input / clarifications.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-01-26"
+     ],
+     "primary": "2024-01-26",
+     "date": "26/1/2024",
+     "text": "CPMM formally issue letter to potential suppliers to request for supplementary information.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-02-15"
+     ],
+     "primary": "2024-02-15",
+     "date": "15/2/2024",
+     "text": "YCH FMD replied CPMM’s comments.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2024-03-05"
+     ],
+     "primary": "2024-03-05",
+     "date": "5/3/2024",
+     "text": "CPMM required YCH to provide clarifications the specifications.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-03-06"
+     ],
+     "primary": "2024-03-06",
+     "date": "6/3/2024",
+     "text": "YCH Security replied CPMM.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2024-03-06"
+     ],
+     "primary": "2024-03-06",
+     "date": "6/3/2024",
+     "text": "CPMM issued further comment.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-03-07",
+      "2024-03-28"
+     ],
+     "primary": "2024-03-07",
+     "date": "7/3/2024 / 28/3/2024",
+     "text": "CPMM stated that clarification reply from two potential suppliers were received.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-03-28"
+     ],
+     "primary": "2024-03-28",
+     "date": "28/3/2024",
+     "text": "CPMM requested YCH to provide full set of documents including finalized tender specifications, feedback summary, marking scheme, declaration form, etc.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-06-07"
+     ],
+     "primary": "2024-06-07",
+     "date": "7/6/2024",
+     "text": "YCH Supplies submitted draft tender documents to CPMM.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2024-07-15"
+     ],
+     "primary": "2024-07-15",
+     "date": "15/7/2024",
+     "text": "YCH Supplies submitted update specifications for Block C CCTV and non-essential AI features as uncommitted requirements to CPMM.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2024-09-24"
+     ],
+     "primary": "2024-09-24",
+     "date": "24/9/2024",
+     "text": "CPMM issued further comments on the tender documents submission.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2024-10-15"
+     ],
+     "primary": "2024-10-15",
+     "date": "15/10/2024",
+     "text": "YCH Supplies replied CPMM’s comments.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2025-01-13"
+     ],
+     "primary": "2025-01-13",
+     "date": "13/1/2025",
+     "text": "CPMM issued further comments on the tender documents submission.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2025-02-07"
+     ],
+     "primary": "2025-02-07",
+     "date": "7/2/2025",
+     "text": "CPMM asked YCH Supplies if there was any update for the EOI and whether the previous EOI exercise shall be cancelled.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2025-03-26"
+     ],
+     "primary": "2025-03-26",
+     "date": "26/3/2025",
+     "text": "YCH Supplies notified CPMM that the previous EOI exercise was recommend to be cancelled and provided justifications.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2025-04-29"
+     ],
+     "primary": "2025-04-29",
+     "date": "29/4/2025",
+     "text": "CPMM informed YCH Supplies that the cancellation of the EOI exercise had been sought and approved.",
+     "cat": "CPMM"
+    }
+   ]
+  },
+  {
+   "name": "Current Tendering",
+   "events": [
+    {
+     "dates": [
+      "2025-03-01"
+     ],
+     "primary": "2025-03-01",
+     "date": "1/3/2025",
+     "text": "New TMS RS Surveyor on board and took over the project from existing TMS HPA.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2025-07-31"
+     ],
+     "primary": "2025-07-31",
+     "date": "31/07/2025",
+     "text": "New TMS circulated their first revised draft of the technical specifications for user comment.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2025-09-01"
+     ],
+     "primary": "2025-09-01",
+     "date": "01/09/2025",
+     "text": "User Meeting 1.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-09-04"
+     ],
+     "primary": "2025-09-04",
+     "date": "04/09/2025",
+     "text": "User Meeting 2.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-09-12"
+     ],
+     "primary": "2025-09-12",
+     "date": "12/09/2025",
+     "text": "User Meeting 3.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-09-17"
+     ],
+     "primary": "2025-09-17",
+     "date": "17/09/2025",
+     "text": "User Meeting 4.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-09-23"
+     ],
+     "primary": "2025-09-23",
+     "date": "23/09/2025",
+     "text": "User Meeting 5.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-10-02"
+     ],
+     "primary": "2025-10-02",
+     "date": "02/10/2025",
+     "text": "User Meeting 6.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-10-08"
+     ],
+     "primary": "2025-10-08",
+     "date": "08/10/2025",
+     "text": "Presentation to HCE.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-10-09"
+     ],
+     "primary": "2025-10-09",
+     "date": "09/10/2025",
+     "text": "User Meeting 7.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-10-16"
+     ],
+     "primary": "2025-10-16",
+     "date": "16/10/2025",
+     "text": "User Meeting 8.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-10-24"
+     ],
+     "primary": "2025-10-24",
+     "date": "24/10/2025",
+     "text": "User Meeting 9.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-11-13"
+     ],
+     "primary": "2025-11-13",
+     "date": "13/11/2025",
+     "text": "User Meeting 10.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-11-25"
+     ],
+     "primary": "2025-11-25",
+     "date": "25/11/2025",
+     "text": "User Meeting 11.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-12-04"
+     ],
+     "primary": "2025-12-04",
+     "date": "04/12/2025",
+     "text": "User Meeting 12.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-12-10"
+     ],
+     "primary": "2025-12-10",
+     "date": "10/12/2025",
+     "text": "User Meeting 13.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2025-12-30"
+     ],
+     "primary": "2025-12-30",
+     "date": "30/12/2025",
+     "text": "User Meeting 14.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2026-01-12"
+     ],
+     "primary": "2026-01-12",
+     "date": "12/01/2026",
+     "text": "User Meeting 15: Final user meeting to review the finalized specifications.",
+     "cat": "MEET"
+    },
+    {
+     "dates": [
+      "2026-01-13"
+     ],
+     "primary": "2026-01-13",
+     "date": "13/01/2026",
+     "text": "TMS issued revised specifications based on discussion on 12/01/2026.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2026-02-11"
+     ],
+     "primary": "2026-02-11",
+     "date": "11/02/2026",
+     "text": "YCH Security forwards the specification file to YCH Supplies for further submission to CPMM.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2026-02-20"
+     ],
+     "primary": "2026-02-20",
+     "date": "20/02/2026",
+     "text": "YCH Supplies requested YCH Security to provide TAP board nominations, product catalogues, updated declaration of conflict of interest form, etc.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2026-02-20"
+     ],
+     "primary": "2026-02-20",
+     "date": "20/2/2026",
+     "text": "CPMM requested YCH to review and provide an updated procurement plan.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2026-04-17"
+     ],
+     "primary": "2026-04-17",
+     "date": "17/4/2026",
+     "text": "YCH Supplies submitted specifications and appendices to CPMM.",
+     "cat": "YCH"
+    },
+    {
+     "dates": [
+      "2026-05-04"
+     ],
+     "primary": "2026-05-04",
+     "date": "4/5/2026",
+     "text": "CPMM acknowledged YCH Security’s concern on the project and target contract award date in Q1 2027, and provide a procurement timeline for reference.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2026-05-19"
+     ],
+     "primary": "2026-05-19",
+     "date": "19/05/2026",
+     "text": "CPMM commented on the draft specifications and checklist.",
+     "cat": "CPMM"
+    },
+    {
+     "dates": [
+      "2026-06-15"
+     ],
+     "primary": "2026-06-15",
+     "date": "15/06/2026",
+     "text": "YCH Supplies submitted revised specifications and checklist to CPMM in response to their comment.",
+     "cat": "YCH"
+    }
+   ]
+  }
+ ]
+}
