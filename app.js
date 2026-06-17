@@ -1,10 +1,10 @@
 /* =====================================================================
- * v2 — "Who Held the Ball": handoff & turnaround timeline
+ * "Who Held the Ball": handoff & turnaround timeline
  *
- * Same dataset as v1 (../timeline_data.json), but built around the delay
- * story: a line zig-zags between YCH (top) and CPMM (bottom) on every
- * handoff; long waits become coloured ribbons; CPMM comment rounds are
- * numbered so the "endless comments" are countable.
+ * Reads timeline_data.json and builds the delay story: a line zig-zags
+ * between YCH (top) and CPMM (bottom) on every handoff; long waits become
+ * coloured ribbons; CPMM comment rounds are numbered so the "endless
+ * comments" are countable.
  *
  * All metrics are computed symmetrically from the dated events and shown
  * honestly (see the audit footnote).
@@ -80,18 +80,36 @@
   const legendEl = document.getElementById('legend');
   const headlineEl = document.getElementById('headline');
   const footnoteBody = document.querySelector('.footnote-body');
+  const fsToggle = document.getElementById('fs-toggle');
+
+  /* ---------- Fullscreen presentation toggle ---------- */
+  function setupFullscreen() {
+    if (!fsToggle) return;
+    const sync = () => {
+      const on = !!document.fullscreenElement;
+      fsToggle.classList.toggle('is-fs', on);
+      fsToggle.title = on ? 'Exit fullscreen (Esc)' : 'Fullscreen presentation';
+    };
+    fsToggle.addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen?.();
+      else document.documentElement.requestFullscreen?.();
+    });
+    document.addEventListener('fullscreenchange', sync);
+    sync();
+  }
 
   /* ---------- Init ---------- */
   async function init() {
+    setupFullscreen();
     try {
-      const res = await fetch('../timeline_data.json', { cache: 'no-store' });
+      const res = await fetch('timeline_data.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       data = await res.json();
     } catch (e) {
       chartHost.innerHTML =
-        `<div class="error">Could not load <code>../timeline_data.json</code>.<br>${escapeHtml(e.message)}<br><br>`
-        + `Serve the project root over HTTP (e.g. <code>python3 -m http.server</code> in the repo root) `
-        + `and open <code>/v2/</code>. Direct <code>file://</code> open is blocked by CORS.`;
+        `<div class="error">Could not load <code>timeline_data.json</code>.<br>${escapeHtml(e.message)}<br><br>`
+        + `Serve the project over HTTP (e.g. <code>python3 -m http.server</code> in this folder) `
+        + `and open the page. Direct <code>file://</code> open is blocked by CORS.`;
       return;
     }
     processData();

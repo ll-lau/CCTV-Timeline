@@ -30,6 +30,27 @@ body {
 }
 .wrap { max-width: 1280px; margin: 0 auto; }
 
+/* ===== Fullscreen presentation toggle ===== */
+.fs-toggle {
+  position: fixed; top: 14px; right: 16px; z-index: 50;
+  width: 34px; height: 34px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, .6);
+  color: var(--muted); cursor: pointer;
+  opacity: .4;
+  transition: opacity .15s ease, color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.fs-toggle:hover, .fs-toggle:focus-visible {
+  opacity: 1; color: var(--ink); background: #fff;
+  box-shadow: 0 2px 8px rgba(2, 6, 23, .12);
+}
+.fs-toggle:focus-visible { outline: 2px solid var(--ych); outline-offset: 2px; }
+.fs-toggle .fs-ico { display: block; }
+.fs-toggle .fs-ico-exit { display: none; }
+.fs-toggle.is-fs .fs-ico-expand { display: none; }
+.fs-toggle.is-fs .fs-ico-exit { display: block; }
+
 header.page h1 { font-size: 21px; margin: 0 0 4px; }
 header.page h1 .muted { color: var(--muted); font-weight: 500; }
 header.page .lead { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.5; }
@@ -173,6 +194,7 @@ header.page .lead b { font-weight: 700; }
 
 @media (max-width: 700px) {
   body { padding: 14px 8px 48px; }
+  header.page { padding-right: 42px; }
   header.page h1 { font-size: 18px; }
   #tooltip { max-width: 250px; }
 }
