@@ -452,10 +452,10 @@
   }
 
   function drawNode(svg, e, cat) {
-    const g = el('g', { class: 'dot' + (e.keyMs ? ' key' : ''), transform: `translate(${e.x}, ${e.y})`, 'data-cat': cat, tabindex: '0' }, svg);
+    // Name the node via aria-label, not an SVG <title>: a <title> also fires the
+    // browser's native hover tooltip, which would double up with #tooltip.
+    const g = el('g', { class: 'dot' + (e.keyMs ? ' key' : ''), transform: `translate(${e.x}, ${e.y})`, 'data-cat': cat, tabindex: '0', role: 'button', 'aria-label': `${fmtDate(e.allDates[0])} — ${e.text}` }, svg);
     g._d = e;
-    const title = el('title', {}, g);
-    title.textContent = `${fmtDate(e.allDates[0])} — ${e.text}`;
     if (e.keyMs) {
       el('circle', { r: GEO.dotR + 4.5, fill: 'none', stroke: CAT_HEX[cat], 'stroke-width': 2, opacity: 0.9, class: 'key-ring' }, g);
       el('circle', { r: GEO.dotR + 1.5, class: `dot-vis cat-${cat}` }, g);
