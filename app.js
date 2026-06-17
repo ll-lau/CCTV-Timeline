@@ -1,6 +1,6 @@
 /* =====================================================================
  * CCTV Replacement Project — Delay Timeline
- * Vanilla JS + SVG. Reads _timeline_data.json (fetched at runtime).
+ * Vanilla JS + SVG. Reads timeline_data.json (fetched at runtime).
  *
  * Layout: 3 horizontal "lanes" share ONE linear time axis (fit-all, no zoom).
  * Each event = a dot; multi-date events become one dot per date.
@@ -68,12 +68,12 @@
 
   async function init() {
     try {
-      const res = await fetch('_timeline_data.json', { cache: 'no-store' });
+      const res = await fetch('timeline_data.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       data = await res.json();
     } catch (e) {
       chartHost.innerHTML =
-        `<div class="error">Could not load <code>_timeline_data.json</code>.<br>${escapeHtml(e.message)}<br><br>`
+        `<div class="error">Could not load <code>timeline_data.json</code>.<br>${escapeHtml(e.message)}<br><br>`
         + `If you opened this file directly, the browser blocks <code>fetch</code> on <code>file://</code>. `
         + `Serve the folder over HTTP, e.g. run <code>python3 -m http.server</code> in the project directory `
         + `and open the printed URL. On GitHub/Cloudflare Pages it works without any of this.</div>`;
