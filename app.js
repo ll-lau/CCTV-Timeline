@@ -32,7 +32,7 @@
   // Milestone ring stroke hex (attributes) + the key milestones to highlight, keyed by lane + primary date.
   const CAT_HEX = { YCH: '#2563eb', MEET: '#14b8a6', CPMM: '#ea580c', FUND: '#64748b' };
   const KEY = {
-    'Funding Approval':  new Set(['2022-12-21', '2023-12-13', '2024-03-28', '2024-04-15', '2024-04-16', '2024-08-13', '2025-08-12']),
+    'Funding Approval':  new Set(['2022-12-21', '2023-12-13', '2024-03-28', '2024-04-15', '2024-08-13', '2025-08-12']),
     'Former Tendering':  new Set(['2022-07-21', '2023-03-01', '2023-04-11', '2023-08-07', '2025-04-29']),
     'Current Tendering': new Set(['2025-03-01', '2025-07-31', '2026-04-17']),
   };
@@ -47,6 +47,13 @@
     axisH: 30,
     dotR: 4.5, hitR: 10,
     stackRow: 9, cluster: 11, minGap: 10,
+    // Callout annotation tunables (key-milestone description boxes).
+    calloutW: 176, calloutPadX: 8, calloutPadY: 6,
+    calloutLineH: 12.5, calloutDateH: 14,
+    calloutGapX: 8, calloutTierGap: 6, calloutMaxLines: 5,
+    charW: 5.7,           // per-char width estimate at font-size 10 (overshoot avoids right-edge bleed)
+    calloutSep: 6,        // whitespace between the two Former↔Current callout regions
+    leaderStem: 8,        // vertical clearance between marker and the leader's elbow
   };
 
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -57,6 +64,30 @@
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
   const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+
+  // Greedy word wrap into <= maxChars-wide lines (SVG callout text has no auto-wrap).
+  // Tokens longer than maxChars are hard-broken into chunks.
+  const wrapText = (text, maxChars) => {
+    const out = [];
+    const push = (w) => {
+      const cur = out[out.length - 1];
+      if (cur && (cur + ' ' + w).length <= maxChars) out[out.length - 1] = cur + ' ' + w;
+      else out.push(w);
+    };
+    for (const word of String(text).split(/\s+/)) {
+      if (!word) continue;
+      if (word.length <= maxChars) { push(word); continue; }
+      for (let i = 0; i < word.length; i += maxChars) push(word.slice(i, i + maxChars));
+    }
+    return out.length ? out : [''];
+  };
+  // Truncate to maxLines, appending an ellipsis to the last kept line if anything is dropped.
+  const elide = (lines, maxLines) => {
+    if (lines.length <= maxLines) return lines;
+    const kept = lines.slice(0, maxLines);
+    kept[maxLines - 1] = kept[maxLines - 1].replace(/[,;:\s.]+$/, '') + '…';
+    return kept;
+  };
   const sideOf = (cat) => (cat === 'CPMM' ? 'CPMM' : (cat === 'FUND' ? null : 'YCH'));
   const isComment = (e) => e.cat === 'CPMM' && (
     /comment/i.test(e.text) || (/clarification/i.test(e.text) && /request|requir/i.test(e.text))
@@ -253,7 +284,7 @@
     note.className = 'legend-note';
     note.innerHTML = '<span class="ring-swatch"></span>'
       + '<span class="legend-text"><span class="legend-label">Key milestone</span>'
-      + '<span class="legend-desc">ringed marker + date</span></span>';
+      + '<span class="legend-desc">ringed marker + dated description</span></span>';
     legendEl.appendChild(note);
   }
 
@@ -290,6 +321,42 @@
     nodes.forEach((n) => (n.y = baseY + n.rowOffset));
   }
 
+  /* ---------- Callout (key-milestone description) layout ---------- */
+  // Wraps each event's text, clamps its box within the plot, and greedily stacks
+  // overlapping boxes into vertical tiers. x-only — safe to run before the y-stack.
+  // dir 'up' = boxes sit above their marker (nearest tier at the band's bottom edge);
+  // dir 'down' = boxes sit below (nearest tier at the band's top edge).
+  function layoutCalloutBand(events, dir, plotLeft, plotRight) {
+    const W = GEO.calloutW;
+    const maxChars = Math.max(6, Math.floor((W - 2 * GEO.calloutPadX) / GEO.charW));
+    const minLeft = plotLeft, maxLeft = plotRight - W;
+    if (!events.length) return { items: [], tierH: [], bandH: 0, dir };
+
+    const items = events.map((e) => {
+      const lines = elide(wrapText(e.text, maxChars), GEO.calloutMaxLines);
+      const boxH = GEO.calloutDateH + lines.length * GEO.calloutLineH + 2 * GEO.calloutPadY;
+      const boxX = Math.max(minLeft, Math.min(e.x - W / 2, maxLeft));
+      return { e, anchorX: e.x, boxX, boxH, lines };
+    });
+    items.sort((a, b) => a.boxX - b.boxX);
+
+    // Greedy tier assignment: lowest tier whose last box clears this one.
+    const tierRight = [];
+    for (const it of items) {
+      let t = 0;
+      while (t < tierRight.length && tierRight[t] + GEO.calloutGapX > it.boxX) t++;
+      it.tier = t;
+      tierRight[t] = it.boxX + W;
+    }
+    const tierH = [];
+    for (const it of items) tierH[it.tier] = Math.max(tierH[it.tier] || 0, it.boxH);
+    // Distance of each tier's near edge from the band's marker-adjacent edge.
+    let acc = 0;
+    const tierNear = tierH.map((h) => { const off = acc; acc += h + GEO.calloutTierGap; return off; });
+    const bandH = tierH.reduce((s, h) => s + h, 0) + (tierH.length - 1) * GEO.calloutTierGap;
+    return { items, tierH, tierNear, bandH, dir };
+  }
+
   /* ---------- Render ---------- */
   function render() {
     pinnedEl = null;
@@ -300,23 +367,57 @@
     const plotW = Math.max(50, plotRight - plotLeft);
     const xOf = (m) => plotLeft + (m - PROC.minMs) / (PROC.maxMs - PROC.minMs) * plotW;
 
-    // Vertical layout.
-    let y = GEO.marginTop;
-    const fundTop = y; const fundCenter = fundTop + GEO.fundStripH / 2;
-    y += GEO.fundStripH + GEO.fundGap;
-    const formerTop = y; y += GEO.tenderRowH + GEO.rowGap;
-    const currentTop = y; y += GEO.tenderRowH + GEO.rowGap;
-    const axisTop = y; const height = axisTop + GEO.axisH;
+    // --- Callout pre-pass (x-only; safe before the y-stack) ---
+    const setX = (e) => { e.x = xOf(e.ms); return e; };
+    const bandA    = layoutCalloutBand(PROC.funding.filter((e) => e.keyMs).map(setX), 'up', plotLeft, plotRight);
+    const formerK  = PROC.former.filter((e) => e.keyMs);
+    const bandB    = layoutCalloutBand(formerK.filter((e) => e.side === 'YCH').map(setX), 'up', plotLeft, plotRight);
+    const bandCtop = layoutCalloutBand(formerK.filter((e) => e.side === 'CPMM').map(setX), 'down', plotLeft, plotRight);
+    const bandCbot = layoutCalloutBand(PROC.current.filter((e) => e.keyMs && e.side === 'YCH').map(setX), 'up', plotLeft, plotRight);
+
+    // --- Vertical layout, expanded to fit each callout band ---
+    const leadGap = 4;   // clearance between a row edge and its nearest callout tier
+    const chartTop = GEO.marginTop;                       // top of plot (year lines, Band A region)
+    const fundTop = chartTop + bandA.bandH + (bandA.bandH ? leadGap : 0);
+    const fundCenter = fundTop + GEO.fundStripH / 2;
+    const fundBottom = fundTop + GEO.fundStripH;
+    const formerTop = fundBottom + GEO.fundGap + bandB.bandH + (bandB.bandH ? leadGap : 0);
+    const formerBottom = formerTop + GEO.tenderRowH;
+    const cTopLead = bandCtop.bandH ? leadGap : 0;
+    const cBotLead = bandCbot.bandH ? leadGap : 0;
+    const midGap = Math.max(GEO.rowGap, cTopLead + bandCtop.bandH + GEO.calloutSep + bandCbot.bandH + cBotLead);
+    const currentTop = formerBottom + midGap;
+    const currentBottom = currentTop + GEO.tenderRowH;
+    const axisTop = currentBottom + GEO.rowGap;
+    const height = axisTop + GEO.axisH;
 
     const rowGeom = (top) => ({ top, ych: top + GEO.ychOffset, cpmm: top + GEO.cpmmOffset, mid: top + (GEO.ychOffset + GEO.cpmmOffset) / 2 });
     const formerG = rowGeom(formerTop), currentG = rowGeom(currentTop);
 
-    layout = { width, height, plotLeft, plotRight, xOf, fundCenter, formerG, currentG, axisTop };
+    layout = { width, height, plotLeft, plotRight, xOf, chartTop, fundCenter, formerG, currentG, axisTop };
 
-    // Assign coordinates.
+    // --- Assign marker coordinates (x already set; y depends on the stack above) ---
     PROC.funding.forEach((e) => { e.x = xOf(e.ms); e.y = fundCenter; });
     layoutTender(PROC.former, formerG);
     layoutTender(PROC.current, currentG);
+
+    // --- Resolve callout box y from each band's marker-adjacent edge, then flatten ---
+    const placeBand = (band, nearY) => band.items.map((it) => {
+      const boxTop = band.dir === 'up'
+        ? nearY - band.tierNear[it.tier] - it.boxH
+        : nearY + band.tierNear[it.tier];
+      return {
+        e: it.e, cat: it.e.cat, anchorX: it.anchorX, markerY: it.e.y,
+        boxX: it.boxX, boxTop, boxH: it.boxH, lines: it.lines, dir: band.dir,
+      };
+    });
+    const callouts = [
+      ...placeBand(bandA, fundTop - leadGap),           // up: near edge = just above funding strip
+      ...placeBand(bandB, formerTop - leadGap),         // up: near edge = just above Former row
+      ...placeBand(bandCtop, formerBottom + cTopLead),  // down: near edge = just below Former row
+      ...placeBand(bandCbot, currentTop - cBotLead),    // up: near edge = just above Current row
+    ];
+    layout.callouts = callouts;
 
     drawSvg();
     applyFocus();
@@ -344,7 +445,7 @@
     const svg = el('svg', { width: L.width, height: L.height, class: 'chart',
       role: 'img', 'aria-label': 'Handoff and turnaround timeline of the CCTV project delay, 2022 to 2026' }, chartHost);
 
-    const chartTop = GEO.marginTop;
+    const chartTop = L.chartTop;
     const chartBottom = L.axisTop;
 
     // Year gridlines.
@@ -362,6 +463,9 @@
     // Tender rows.
     drawTender(svg, P.former, P.formerSegs, L.formerG, 'Former Tendering');
     drawTender(svg, P.current, P.currentSegs, L.currentG, 'Current Tendering');
+
+    // Key-milestone description callouts (above Today so the badge stays on top).
+    drawCallouts(svg);
 
     // Today line + badge.
     if (P.todayMs >= P.minMs && P.todayMs <= P.maxMs) {
@@ -454,20 +558,46 @@
   function drawNode(svg, e, cat) {
     // Name the node via aria-label, not an SVG <title>: a <title> also fires the
     // browser's native hover tooltip, which would double up with #tooltip.
-    const g = el('g', { class: 'dot' + (e.keyMs ? ' key' : ''), transform: `translate(${e.x}, ${e.y})`, 'data-cat': cat, tabindex: '0', role: 'button', 'aria-label': `${fmtDate(e.allDates[0])} — ${e.text}` }, svg);
+    const g = el('g', { class: 'dot' + (e.keyMs ? ' key' : ''), transform: `translate(${e.x}, ${e.y})`, 'data-cat': cat, 'data-key': e.keyMs ? '1' : '0', tabindex: '0', role: 'button', 'aria-label': `${fmtDate(e.allDates[0])} — ${e.text}` }, svg);
     g._d = e;
     if (e.keyMs) {
+      // Ringed marker only — the date + description live in a callout (see drawCallouts).
       el('circle', { r: GEO.dotR + 4.5, fill: 'none', stroke: CAT_HEX[cat], 'stroke-width': 2, opacity: 0.9, class: 'key-ring' }, g);
       el('circle', { r: GEO.dotR + 1.5, class: `dot-vis cat-${cat}` }, g);
     } else {
       el('circle', { r: GEO.dotR, class: `dot-vis cat-${cat}` }, g);
     }
     el('circle', { r: GEO.hitR, class: 'dot-hit' }, g);
-    if (e.keyMs) {
-      const upper = e.side !== 'CPMM';   // YCH/FUND → label above; CPMM → below (clear of the zig-zag)
-      const ly = upper ? -(GEO.dotR + 12) : (GEO.dotR + 13);
-      const t = el('text', { x: 0, y: ly, class: 'key-label', 'text-anchor': 'middle' }, g);
-      t.textContent = shortDate(e.pIso);
+  }
+
+  function drawCallouts(svg) {
+    const W = GEO.calloutW;
+    const accentW = 3;
+    const textX = (c) => c.boxX + accentW + GEO.calloutPadX;
+    for (const c of layout.callouts) {
+      const hex = CAT_HEX[c.cat] || '#0f172a';
+      const boxMidX = c.boxX + W / 2;
+      const nearEdgeY = c.dir === 'up' ? c.boxTop + c.boxH : c.boxTop;   // box edge nearest the marker
+      const g = el('g', { class: 'callout', 'data-cat': c.cat, 'aria-hidden': 'true' }, svg);
+      g._d = c.e;
+
+      // Leader: short vertical off the marker, then horizontal into the box's near edge.
+      const stemY = c.dir === 'up' ? c.markerY - (GEO.dotR + 5.5) : c.markerY + (GEO.dotR + 5.5);
+      el('polyline', { points: `${c.anchorX},${stemY} ${c.anchorX},${nearEdgeY} ${boxMidX},${nearEdgeY}`, class: 'callout-leader' }, g);
+
+      // Card: white body + category accent bar.
+      el('rect', { x: c.boxX, y: c.boxTop, width: W, height: c.boxH, rx: 4, class: 'callout-bg' }, g);
+      el('rect', { x: c.boxX, y: c.boxTop, width: accentW, height: c.boxH, fill: hex, class: 'callout-accent' }, g);
+
+      // Date line (bold, category-coloured) then wrapped description lines.
+      const tx = textX(c);
+      const dateT = el('text', { x: tx, y: c.boxTop + GEO.calloutPadY + 10, class: 'callout-date', fill: hex }, g);
+      dateT.textContent = fmtDate(c.e.allDates[0]);
+      const descTop = c.boxTop + GEO.calloutPadY + GEO.calloutDateH;
+      for (let i = 0; i < c.lines.length; i++) {
+        const lt = el('text', { x: tx, y: descTop + i * GEO.calloutLineH + 9, class: 'callout-desc' }, g);
+        lt.textContent = c.lines[i];
+      }
     }
   }
 
@@ -522,10 +652,20 @@
     // dim non-sibling dots on hover so the volley reads
     const all = chartHost.querySelectorAll('.dot');
     const me = dot._d;
-    if (!on) { all.forEach((d) => d.classList.remove('hl', 'dimmed')); applyFocus(); return; }
+    if (!on) {
+      all.forEach((d) => d.classList.remove('hl', 'dimmed'));
+      chartHost.querySelectorAll('.callout').forEach((c) => c.classList.remove('callout-hl'));
+      applyFocus();
+      return;
+    }
     all.forEach((d) => {
       const same = d._d === me || (d._d.allDates === me.allDates && d._d.text === me.text);
       d.classList.toggle('hl', same);
+    });
+    // Emphasise the matching key-milestone callout, if any.
+    chartHost.querySelectorAll('.callout').forEach((c) => {
+      const cd = c._d;
+      c.classList.toggle('callout-hl', cd === me || (cd && cd.allDates === me.allDates && cd.text === me.text));
     });
   }
 

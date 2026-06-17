@@ -135,6 +135,16 @@ header.page .lead b { font-weight: 700; }
   pointer-events: none;
 }
 
+/* Key milestone description callouts */
+.callout { pointer-events: none; }
+.callout-bg { fill: #fff; stroke: var(--card-border); stroke-width: 1; }
+.callout-accent { stroke: none; }
+.callout-date { font-size: 10px; font-weight: 700; }
+.callout-desc { font-size: 10px; fill: var(--ink); }
+.callout-leader { stroke: #94a3b8; stroke-width: 1; fill: none; opacity: .55; stroke-linejoin: round; stroke-linecap: round; }
+.callout-hl .callout-bg { stroke: var(--ink); stroke-width: 1.5; }
+.callout-hl .callout-leader { opacity: 1; }
+
 /* Legend note (non-interactive) for key milestones */
 .legend-note {
   display: inline-flex; align-items: center; gap: 8px;
