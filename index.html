@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CCTV Replacement Project — Delay Timeline</title>
+  <title>CCTV Project — Who Held the Ball (v2)</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="wrap">
     <header class="page">
-      <h1>CCTV Replacement Project — Delay Timeline</h1>
+      <h1>CCTV Replacement Project — <span class="muted">Funding Approval and Tendering Timeline</span></h1>
       <p class="lead">
-        Hover a dot for details · click to pin · colours show who acted.
-        Shared timeline, May 2022 → Jun 2026.
+        A handoff &amp; turnaround view of the project progress. The line zig-zags between
+        <b style="color:var(--ych)">YCH</b> (top) and <b style="color:var(--cpmm)">CPMM</b> (bottom)
+        every time the baton changes hands; ribbons mark the long waits in between.
+        Hover a dot for the event, or a ribbon for the wait.
       </p>
     </header>
+
+    <div id="headline" class="headline"></div>
 
     <div id="legend" aria-label="Legend"></div>
 
@@ -22,10 +26,10 @@
       <div id="tooltip" role="tooltip" aria-hidden="true"></div>
     </div>
 
-    <p class="hint">
-      Events are colour-coded by actor. Some events span several dates and appear as multiple dots;
-      hovering one gently highlights the others. A dashed line marks today (16 Jun 2026).
-    </p>
+    <details class="footnote">
+      <summary>Remarks</summary>
+      <div class="footnote-body"></div>
+    </details>
   </div>
 
   <script src="app.js" defer></script>
