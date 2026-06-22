@@ -477,19 +477,32 @@
       t.textContent = 'Today';
     }
 
-    // Axis.
-    el('line', { x1: L.plotLeft, y1: L.axisTop, x2: L.plotRight, y2: L.axisTop, class: 'axis-line' }, svg);
-    for (let m = startOfMonth(P.minMs); m <= P.maxMs; m = addMonth(m)) {
-      const x = L.xOf(m), d = new Date(m), jan = d.getUTCMonth() === 0;
-      el('line', { x1: x, y1: L.axisTop, x2: x, y2: L.axisTop + (jan ? 7 : 4), class: 'axis-tick' + (jan ? ' major' : '') }, svg);
-      if (jan) { const t = el('text', { x, y: L.axisTop + 20, class: 'axis-year-label', 'text-anchor': 'middle' }, svg); t.textContent = d.getUTCFullYear(); }
-    }
+    // Time scale: draw it at both the top and the bottom of the timeline.
+    drawAxis(svg, chartTop, 'top');
+    drawAxis(svg, L.axisTop, 'bottom');
 
     attachInteractions(svg);
   }
 
   const startOfMonth = (ms) => { const d = new Date(ms); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1); };
   const addMonth = (ms) => { const d = new Date(ms); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1); };
+
+  // Time-scale axis: a horizontal line with monthly ticks and January year labels.
+  // side 'top' draws ticks/labels above the line, mirroring the bottom scale.
+  function drawAxis(svg, y, side) {
+    const L = layout, P = PROC;
+    const dir = side === 'top' ? -1 : 1;
+    el('line', { x1: L.plotLeft, y1: y, x2: L.plotRight, y2: y, class: 'axis-line' }, svg);
+    for (let m = startOfMonth(P.minMs); m <= P.maxMs; m = addMonth(m)) {
+      const x = L.xOf(m), d = new Date(m), jan = d.getUTCMonth() === 0;
+      el('line', { x1: x, y1: y, x2: x, y2: y + dir * (jan ? 7 : 4), class: 'axis-tick' + (jan ? ' major' : '') }, svg);
+      if (jan) {
+        const labelY = side === 'top' ? y - 12 : y + 20;
+        const t = el('text', { x, y: labelY, class: 'axis-year-label', 'text-anchor': 'middle' }, svg);
+        t.textContent = d.getUTCFullYear();
+      }
+    }
+  }
 
   function drawFunding(svg) {
     const L = layout, P = PROC;

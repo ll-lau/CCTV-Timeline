@@ -56,8 +56,10 @@ header.page h1 .muted { color: var(--muted); font-weight: 500; }
 header.page .lead { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.5; }
 header.page .lead b { font-weight: 700; }
 
-/* ===== Headline stat bar ===== */
-.headline { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 16px; }
+/* ===== Headline stat bar (collapsible, collapsed by default) ===== */
+.headline-wrap { margin-bottom: 16px; }
+.headline-summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--ink); padding: 2px 0; }
+.headline { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-top: 10px; }
 .stat {
   background: #fff; border: 1px solid var(--card-border); border-left: 4px solid var(--cpmm);
   border-radius: 8px; padding: 10px 12px;
