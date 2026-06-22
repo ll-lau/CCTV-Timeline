@@ -14,9 +14,6 @@
 
   /* ---------- Config ---------- */
   const TODAY_ISO = '2026-06-16';
-  // Soft access gate (client-side ONLY — NOT real security; this string is visible in
-  // the page source and trivially bypassed). Change it to your own access code.
-  const ACCESS_CODE = 'YCH-CCTV';
   const STALL_DAYS = 30;          // handoff gap at/above this becomes a "stall" ribbon
   const FUND_STALL_DAYS = 60;     // funding gap threshold
   const DAY = 86400000;
@@ -115,7 +112,6 @@
   const headlineEl = document.getElementById('headline');
   const footnoteBody = document.querySelector('.footnote-body');
   const fsToggle = document.getElementById('fs-toggle');
-  const gate = document.getElementById('gate');
 
   /* ---------- Fullscreen presentation toggle ---------- */
   function setupFullscreen() {
@@ -133,34 +129,9 @@
     sync();
   }
 
-  /* ---------- Access gate (soft, client-side only — not real security) ---------- */
-  function setupGate() {
-    if (!gate) return;
-    // Returning visitor this session: the inline <head> script already unlocked via CSS.
-    if (document.documentElement.classList.contains('gate-unlocked')) return;
-    const form = document.getElementById('gate-form');
-    const input = document.getElementById('gate-input');
-    const error = document.getElementById('gate-error');
-    const card = gate.querySelector('.gate-card');
-    input?.focus();
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (input.value === ACCESS_CODE) {
-        sessionStorage.setItem('cctv-unlocked', '1');
-        document.documentElement.classList.add('gate-unlocked');   // CSS hides the gate + restores scroll
-      } else {
-        error.textContent = 'Incorrect password. Please try again.';
-        input.value = '';
-        input.focus();
-        card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
-      }
-    });
-  }
-
   /* ---------- Init ---------- */
   async function init() {
     setupFullscreen();
-    setupGate();
     try {
       const res = await fetch('timeline_data.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
