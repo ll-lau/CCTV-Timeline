@@ -33,7 +33,7 @@
   const CAT_HEX = { YCH: '#2563eb', MEET: '#14b8a6', CPMM: '#ea580c', FUND: '#64748b' };
   const KEY = {
     'Funding Approval':  new Set(['2022-12-21', '2023-12-13', '2024-03-28', '2024-04-15', '2024-08-13', '2025-08-12']),
-    'Previous Tendering':  new Set(['2022-07-21', '2023-03-01', '2023-04-11', '2023-08-07', '2025-04-29']),
+    'Former Tendering':  new Set(['2022-07-21', '2023-03-01', '2023-04-11', '2023-08-07', '2025-04-29']),
     'Current Tendering': new Set(['2025-03-01', '2025-07-31', '2026-04-17']),
   };
   const isKey = (name, pIso) => !!KEY[name] && KEY[name].has(pIso);
@@ -159,7 +159,7 @@
       ms: ms(e.primary), side: sideOf(e.cat), pIso: e.primary, keyMs: isKey(name, e.primary),
     })).sort((a, b) => a.ms - b.ms);
 
-    const former  = evList(byName('Previous Tendering'), 'Previous Tendering');
+    const former  = evList(byName('Former Tendering'), 'Former Tendering');
     const current = evList(byName('Current Tendering'), 'Current Tendering');
     const funding = byName('Funding Approval').events.map((e) => ({
       cat: 'FUND', text: e.text, allDates: e.dates, displayDate: e.date,
@@ -461,7 +461,7 @@
     drawFunding(svg);
 
     // Tender rows.
-    drawTender(svg, P.former, P.formerSegs, L.formerG, 'Previous Tendering');
+    drawTender(svg, P.former, P.formerSegs, L.formerG, 'Former Tendering');
     drawTender(svg, P.current, P.currentSegs, L.currentG, 'Current Tendering');
 
     // Key-milestone description callouts (above Today so the badge stays on top).
