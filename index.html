@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CCTV Replacement Project — Funding Approval and Tendering Timeline</title>
   <link rel="stylesheet" href="styles.css">
+  <script>try{if(sessionStorage.getItem('cctv-unlocked'))document.documentElement.classList.add('gate-unlocked')}catch(e){}</script>
 </head>
 <body>
   <button id="fs-toggle" class="fs-toggle" type="button" aria-label="Toggle fullscreen" title="Fullscreen presentation">
@@ -15,6 +16,26 @@
       <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+
+  <div id="gate" class="gate">
+    <form class="gate-card" id="gate-form" autocomplete="off">
+      <div class="gate-lock" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="11" width="16" height="9" rx="2"/>
+          <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+        </svg>
+      </div>
+      <h2 class="gate-title">Restricted access</h2>
+      <p class="gate-sub">Please enter the password to view this timeline.</p>
+      <label class="gate-field">
+        <span class="gate-label">Password</span>
+        <input type="password" id="gate-input" class="gate-input" autocomplete="current-password" placeholder="Enter password" />
+      </label>
+      <p class="gate-error" id="gate-error" role="alert"></p>
+      <button type="submit" class="gate-btn">Unlock</button>
+    </form>
+  </div>
+
   <div class="wrap">
     <header class="page">
       <h1>CCTV Replacement Project — <span class="muted">Funding Approval and Tendering Timeline</span></h1>
